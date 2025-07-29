@@ -1,0 +1,58 @@
+/*Given a string s consisting of lowercase English letters, for every character whose first and last occurrences are at different positions, calculate the sum of ASCII values of characters strictly between its first and last occurrence.
+Return all such non-zero sums (order does not matter).
+
+Examples:
+
+Input: s = "abacab"
+Output: [293, 294]
+Explanation: characters 'a' and 'b' appear more than once:
+'a' : between positions 1 and 5 → characters are b, a, c and ascii sum is 98 + 97 + 99 = 294.
+'b' : between positions 2 and 6 → characters are a, c, a and ascii sum is 97 + 99 + 97 = 293.
+Input: s = "acdac"
+Output: [197, 199]
+Explanation: characters 'a' and 'c' appear more than once:
+'a' : between positions 1 and 4 → characters are c, d and ascii sum is 99 + 100 = 199.
+'c' : between positions 2 and 5 → characters are d, a and ascii sum is 100 + 97 = 197.
+Constraints:
+1 ≤ s.size() ≤ 105*/
+
+
+class Solution {
+    public ArrayList<Integer> asciirange(String s) {
+        
+        ArrayList<Integer> sol=new ArrayList<>();
+        
+        TreeMap<Character, Integer> cntfstoc= new TreeMap<>();
+        TreeMap<Character, Integer> hm= new TreeMap<>();
+        
+        for(int i=0; i<s.length(); i++){
+            if(!hm.containsKey(s.charAt(i))){
+                cntfstoc.put(s.charAt(i),i);
+                hm.put(s.charAt(i),i);
+            }
+            else{
+                hm.put(s.charAt(i),i);
+            }
+        }
+        
+            for(Map.Entry<Character, Integer>entry:cntfstoc.entrySet()){
+                int a=entry.getValue(), b=hm.get(entry.getKey());
+                if(a!=b){
+                   int x=(add(s,a,b));
+                   if(x!=0) sol.add(x);
+                }
+            }
+            
+            
+        
+        return sol;
+    }
+    
+    public static int add(String s,int a, int b){
+        int sum=0;
+        for(int i=a+1; i<b; i++){
+            sum+=s.charAt(i);
+        }
+        return sum;
+    }
+}
