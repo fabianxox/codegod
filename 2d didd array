@@ -1,0 +1,47 @@
+You are given a 2D integer matrix mat[][] of size n × m and a list of q operations opr[][]. Each operation is represented as an array [v, r1, c1, r2, c2], where:
+
+v is the value to be added
+(r1, c1) is the top-left cell of a submatrix
+(r2, c2) is the bottom-right cell of the submatrix (inclusive)
+For each of the q operations, add v to every element in the submatrix from (r1, c1) to (r2, c2). Return the final matrix after applying all operations.
+
+Examples:
+
+Input: mat[][] = [[1, 2, 3],  opr[][] = [[2, 0, 0, 1, 1], [-1, 1, 0, 2, 2]]
+                [1, 1, 0],
+                [4,-2, 2]]
+Output: [[3, 4, 3],
+        [2, 2, -1],
+        [3, -3, 1]] 
+-----
+
+brute:
+
+class Solution {
+    public ArrayList<ArrayList<Integer>> applyDiff2D(int[][] mat, int[][] opr) {
+        
+        ArrayList<ArrayList<Integer>>al=new ArrayList<>();
+        
+        for(int i=0; i<opr.length; i++){
+           fabx(mat,opr[i][0], opr[i][1], opr[i][2], opr[i][3], opr[i][4]);
+           
+        }
+        
+        for (int i = 0; i < mat.length; i++) {
+            ArrayList<Integer> row = new ArrayList<>();
+            for (int j = 0; j < mat[i].length; j++) {
+                row.add(mat[i][j]);
+            }
+            al.add(row);
+        }
+        return al;
+    }
+    
+    public static void fabx(int[][]mat,int valnum, int r1, int c1, int r2, int c2){
+        for(int i=r1; i<=r2; i++){
+            for(int j=c1; j<=c2; j++){
+                mat[i][j]+=valnum;
+            }
+        }
+    }
+}
